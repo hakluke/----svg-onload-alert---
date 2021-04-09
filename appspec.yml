@@ -1,0 +1,26 @@
+version: 0.0
+os: linux
+files:
+- source: /webpage
+  destination: /var/www
+- source: /scripts/requirements.txt
+  destination: /home/ec2-user/scripts
+hooks:
+  AfterInstall:
+  - location: scripts/install_python3
+    timeout: 300
+    runas: root
+  - location: scripts/codestar_remote_access
+    timeout: 300
+    runas: root
+  - location: scripts/install_nginx
+    timeout: 300
+    runas: root
+  ApplicationStart:
+  - location: scripts/start_server
+    timeout: 300
+    runas: root
+  ApplicationStop:
+  - location: scripts/stop_server
+    timeout: 300
+    runas: root
